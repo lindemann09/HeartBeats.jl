@@ -72,8 +72,8 @@ function detect_heartbeats(ecg::AbstractVector, fs::Real)
                 searchback_divisor = 2^i
                 best_searchback_index = previous_peak_index + refractory_samples
                 best_candidate_amplitude = -1
-                searchback_index = best_searchback_index
-                while searchback_index < index && searchback_index > 1
+                searchback_index = best_searchback_index < 2 ? 2 : best_searchback_index
+                while searchback_index < index
                     PEAKF = filtered[searchback_index]
                     if PEAKF > filtered[searchback_index + 1]
                         if PEAKF > filtered[searchback_index - 1]
